@@ -1,0 +1,41 @@
+
+server:
+  port: 6166
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.107.70.188:3306/ztw_aph?serverTimezone=CTT&characterEncoding=UTF8
+    username: root
+    password: diyikeji
+
+
+
+
+  redis:
+    hostName: 39.107.70.188
+    port: 6379
+    timeout: 20000ms
+   # password: 000000
+    auth: 000000
+    jedis:
+      pool:
+        max-idle: 20
+        max-wait: -1ms
+        max-active: -1
+
+jwt:
+  config:
+    key: elevator
+    ttl: 3600000 #?С????
+mybatis:
+  mapper-locations: classpath:com/example/*/*/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+#分页
+pagehelper:
+  helper-dialect: mysql
+
+
+

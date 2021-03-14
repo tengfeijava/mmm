@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.SellMapper">
+    <resultMap id="Sell" type="com.example.index.pojo.Sell">
+      <!--<result column="sell_sum" jdbcType="INTEGER" property="sellsum"/>-->
+      <!--<result column="sell_income" jdbcType="DOUBLE" property="sellincome"/>-->
+      <!--<result column="sell_expend" jdbcType="DOUBLE" property="sellexpend"/>-->
+    </resultMap>
+
+    <select id="sellCollect" parameterType="java.lang.String" resultType="com.example.index.pojo.Sell">
+    		 SELECT DISTINCT a.sellsum,a.sellincome,a.sellexpend FROM
+                (SELECT
+                f_elevator_class,
+                COUNT(f_elevator_class) AS sellsum,
+                sum(f_payment) AS sellincome,
+                        sum(f_price) AS sellexpend
+                FROM payment GROUP BY f_elevator_class)a
+                JOIN payment b ON a.f_elevator_class = b.f_elevator_class
+				WHERE a.f_elevator_class = #{sell_class}
+    </select>
+</mapper>    

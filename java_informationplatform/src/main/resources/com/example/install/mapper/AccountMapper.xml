@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.install.mapper.AccountMapper">
+    <resultMap id="Account" type="com.example.install.pojo.Account">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
+        <result column="amount_sum" jdbcType="DOUBLE" property="amountSum"/>
+        <result column="amount_actual" jdbcType="DOUBLE" property="amountActual"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <result column="ratio" jdbcType="DOUBLE" property="ratio"/>
+
+
+
+        <!--<result column="contract_type" jdbcType="VARCHAR" property="contract_type"/>-->
+        <!--<result column="contract_num" jdbcType="VARCHAR" property="contract_num"/>-->
+        <!--<result column="company" jdbcType="VARCHAR" property="company"/>-->
+        <!--<result column="contract_company" jdbcType="VARCHAR" property="contract_company"/>-->
+        <!--<result column="amount_sum" jdbcType="DOUBLE" property="amount_sum"/>-->
+        <!--<result column="amount_apply" jdbcType="DOUBLE" property="amount_apply"/>-->
+        <!--<result column="amount_takeoff" jdbcType="DOUBLE" property="amount_takeoff"/>-->
+        <!--<result column="applicant" jdbcType="VARCHAR" property="applicant"/>-->
+        <!--<result column="apply_time" jdbcType="VARCHAR" property="apply_time"/>-->
+        <!--<result column="state" jdbcType="VARCHAR" property="state"/>-->
+        <!--<result column="approval_state" jdbcType="VARCHAR" property="approval_state"/>-->
+        <!--<result column="approval_now" jdbcType="VARCHAR" property="approval_now"/>-->
+        <!--<result column="approval_next" jdbcType="VARCHAR" property="approval_next"/>-->
+        <!--<result column="application" jdbcType="VARCHAR" property="application"/>-->
+        <!--<result column="related_pro" jdbcType="VARCHAR" property="related_pro"/>-->
+        <!--<result column="amount_receiver" jdbcType="VARCHAR" property="amount_receiver"/>-->
+        <!--<result column="amount_payer" jdbcType="VARCHAR" property="amount_payer"/>-->
+        <!--<result column="amount_way" jdbcType="VARCHAR" property="amount_way"/>-->
+        <!--<result column="currency" jdbcType="VARCHAR" property="currency"/>-->
+        <!--<result column="progress" jdbcType="DOUBLE" property="progress"/>-->
+        <!--<result column="progress_rate" jdbcType="DOUBLE" property="progress_rate"/>-->
+        <!--<result column="amount_hist" jdbcType="DOUBLE" property="amount_hist"/>-->
+        <!--<result column="type_pro" jdbcType="VARCHAR" property="type_pro"/>-->
+        <!--<result column="content_text" jdbcType="VARCHAR" property="content_text"/>-->
+    </resultMap>
+     <select id="selectfyAll" resultMap="Account">
+         SELECT id,contract_name,contract_company,amount_sum FROM account
+     </select>
+    <select id="findByName" parameterType="java.lang.String" resultMap="Account">
+          SELECT DISTINCT a.id,a.contract_name,a.amount_sum,a.amount_actual FROM
+        (SELECT
+        max(id)id,
+        contract_name,
+		max(amount_actual)amount_actual,
+		max(amount_sum)amount_sum
+        FROM account GROUP BY contract_name)a
+        JOIN account b ON a.contract_name = b.contract_name
+        WHERE a.contract_name = #{contract_name}
+    </select>
+
+</mapper>    

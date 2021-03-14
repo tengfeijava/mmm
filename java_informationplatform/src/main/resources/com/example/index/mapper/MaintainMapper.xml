@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.MaintainMapper">
+    <resultMap id="Maintain" type="com.example.index.pojo.Maintain">
+        <!--<result column="maintain_sum" jdbcType="INTEGER" property="maintainsum"/>-->
+        <!--<result column="maintain_income" jdbcType="DECIMAL" property="maintainincome"/>-->
+        <!--<result column="maintain_expend" jdbcType="DECIMAL" property="maintainexpend"/>-->
+    </resultMap>
+
+
+    <select id="findByNumbersum" resultType="java.lang.Integer">
+       SELECT IFNULL(sum(service_number),0) maintainsum FROM particulars
+   </select>
+    <select id="findBygathering" parameterType="java.lang.String" resultType="Double">
+        SELECT IFNULL(sum(service_money),0) maintainincome FROM gatheringpayment WHERE service_class = #{gathering}
+    </select>
+    <select id="findBypaymen" parameterType="java.lang.String" resultType="Double">
+        SELECT IFNULL(sum(service_money),0) maintainexpend FROM gatheringpayment WHERE service_class = #{payment}
+    </select>
+</mapper>    

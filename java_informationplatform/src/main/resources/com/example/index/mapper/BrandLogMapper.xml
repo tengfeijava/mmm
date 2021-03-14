@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.BrandLogMapper">
+    <resultMap id="Brandlog" type="com.example.index.pojo.Brandlog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="brandaccessory" jdbcType="VARCHAR" property="brandAccessory"/>
+        <result column="brand" jdbcType="VARCHAR" property="Brand"/>
+    </resultMap>
+
+    <select id="selectAllBrandLog" resultMap="Brandlog">
+        select  brand,brandaccessory from brandlog
+    </select>
+</mapper>    

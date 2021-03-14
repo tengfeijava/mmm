@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cooperation.mapper.ParticularsMapper">
+    <resultMap id="Particulars" type="com.example.cooperation.pojo.Particulars">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="service_name" jdbcType="VARCHAR" property="serviceName"/>
+        <result column="service_number" jdbcType="INTEGER" property="serviceNumber"/>
+        <result column="service_type" jdbcType="VARCHAR" property="serviceType"/>
+        <result column="service_period" jdbcType="VARCHAR" property="servicePeriod"/>
+        <result column="service_city" jdbcType="VARCHAR" property="serviceCity"/>
+        <result column="service_firm" jdbcType="VARCHAR" property="serviceFirm"/>
+        <result column="service_object" jdbcType="VARCHAR" property="serviceObject"/>
+        <result column="service_j_linkman" jdbcType="VARCHAR" property="serviceJlinkman"/>
+        <result column="service_j_position" jdbcType="VARCHAR" property="serviceJposition"/>
+        <result column="service_j_phone" jdbcType="VARCHAR" property="serviceJphone"/>
+        <result column="service_y_linkman" jdbcType="VARCHAR" property="serviceYlinkman"/>
+        <result column="service_y_position" jdbcType="VARCHAR" property="serviceYposition"/>
+        <result column="service_y_phone" jdbcType="VARCHAR" property="serviceYphone"/>
+    </resultMap>
+
+
+
+
+    <select id="ParticularsfindByName" resultType="java.lang.String" resultMap="Particulars">
+        select service_number,service_type,service_period,service_city from particulars where service_name = #{contract_name}
+    </select>
+    <select id="findByName" parameterType="java.lang.String" resultType="com.example.cooperation.pojo.Particulars">
+            SELECT id,service_name,service_number,service_type,service_period,service_city,service_firm,
+            service_object,service_j_linkman,service_j_position,service_j_phone,service_y_linkman,service_y_linkman,
+            service_y_phone FROM particulars WHERE service_name = #{contract_name}
+    </select>
+
+    <select id="serviceSum" resultType="com.example.cooperation.pojo.Particulars">
+        SELECT SUM(service_number) service_number FROM particulars
+    </select>
+
+    <insert id="insertp" parameterType="com.example.cooperation.pojo.Particulars">
+        insert into  particulars
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serviceName != null and serviceName != ''">
+                service_name,
+            </if>
+            <if test="serviceNumber != null and serviceNumber != ''">
+                service_number,
+            </if>
+            <if test="serviceType != null and serviceType != ''">
+                service_type,
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                service_period,
+            </if>
+            <if test="serviceCity != null and serviceCity != ''">
+                service_city,
+            </if>
+            <if test="serviceFirm != null and serviceFirm != ''">
+                service_firm,
+            </if>
+            <if test="serviceObject != null and serviceObject != ''">
+                service_object,
+            </if>
+            <if test="serviceJlinkman != null and serviceJlinkman != ''">
+                service_j_linkman,
+            </if>
+            <if test="serviceJposition != null and serviceJposition != ''">
+                service_j_position,
+            </if>
+            <if test="serviceJphone != null and serviceJphone != ''">
+                service_j_phone,
+            </if>
+            <if test="serviceYlinkman != null and serviceYlinkman != ''">
+                service_y_linkman,
+            </if>
+            <if test="serviceYposition != null and serviceYposition != ''">
+                service_y_position,
+            </if>
+            <if test="serviceYphone != null and serviceYphone != ''">
+                service_y_phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serviceName != null and serviceName != ''">
+                #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceNumber != null and serviceNumber != ''">
+                #{serviceNumber,jdbcType=INTEGER},
+            </if>
+            <if test="serviceType != null and serviceType != ''">
+                #{serviceType,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCity != null and serviceCity != ''">
+                #{serviceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceFirm != null and serviceFirm != ''">
+                #{serviceFirm,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceObject != null and serviceObject != ''">
+                #{serviceObject,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceJlinkman != null and serviceJlinkman != ''">
+                #{serviceJlinkman,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceJposition != null and serviceJposition != ''">
+                #{serviceJposition,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceJphone != null and serviceJphone != ''">
+                #{serviceJphone,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceYlinkman != null and serviceYlinkman != ''">
+                #{serviceYlinkman,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceYposition != null and serviceYposition != ''">
+                #{serviceYposition,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceYphone != null and serviceYphone != ''">
+                #{serviceYphone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updatep" parameterType="com.example.cooperation.pojo.Particulars">
+        update particulars
+        <set>
+            <if test="serviceName != null and serviceName != ''">
+                service_name = #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceNumber != null and serviceNumber != ''">
+                service_number = #{serviceNumber,jdbcType=INTEGER},
+            </if>
+            <if test="serviceType != null and serviceType != ''">
+                service_type = #{serviceType,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                service_period = #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCity != null and serviceCity != ''">
+                service_city = #{serviceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceFirm != null and serviceFirm != ''">
+                service_firm = #{serviceFirm,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceObject != null and serviceObject != ''">
+                service_object = #{serviceObject,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceJlinkman != null and serviceJlinkman != ''">
+                service_j_linkman = #{serviceJlinkman,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceJposition != null and serviceJposition != ''">
+                service_j_position = #{serviceJposition,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceJphone != null and serviceJphone != ''">
+                service_j_phone = #{serviceJphone,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceYlinkman != null and serviceYlinkman != ''">
+                service_y_linkman = #{serviceYlinkman,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceYposition != null and serviceYposition != ''">
+                service_y_position = #{serviceYposition,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceYphone != null and serviceYphone != ''">
+                service_y_phone = #{serviceYphone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deletep" parameterType="java.lang.Integer">
+        delete from particulars where id = #{id}
+    </delete>
+
+    <select id="selectNumberAndFirm" resultMap="Particulars">
+	SELECT DISTINCT a.service_number,a.service_firm FROM
+	(SELECT
+	 SUM(service_number) service_number,
+	 service_firm
+	 FROM particulars GROUP BY service_firm)a
+	 JOIN particulars b ON a.service_firm = b.service_firm
+    </select>
+
+    <!--<delete id="deletep" parameterType="java.lang.String">-->
+        <!--delete from particulars where contractName = #{service_name,jdbcType=VARCHAR}-->
+    <!--</delete>-->
+
+    <update id="updateP" parameterType="com.example.cooperation.pojo.Particulars">
+        update particulars
+        <set>
+            <if test="serviceType != null and serviceType != ''">
+                service_type = #{serviceType,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                service_period = #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCity != null and serviceCity != ''">
+                service_city = #{serviceCity,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where service_name = #{serviceName,jdbcType=VARCHAR}
+    </update>
+</mapper>    

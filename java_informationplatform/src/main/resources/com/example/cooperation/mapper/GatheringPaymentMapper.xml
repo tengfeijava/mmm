@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cooperation.mapper.GatheringPaymentMapper">
+    <resultMap id="GatheringPayment" type="com.example.cooperation.pojo.GatheringPayment">
+       <id column="id" jdbcType="INTEGER" property="id"/>
+       <result column="service_name" jdbcType="VARCHAR" property="serviceName"/>
+       <result column="service_start_end" jdbcType="VARCHAR" property="serviceStartEnd"/>
+       <result column="service_time" jdbcType="VARCHAR" property="serviceTime"/>
+       <result column="service_money" jdbcType="DOUBLE" property="serviceMoney"/>
+       <result column="service_expire" jdbcType="VARCHAR" property="serviceExpire"/>
+       <result column="service_period" jdbcType="VARCHAR" property="servicePeriod"/>
+       <result column="service_accessory" jdbcType="VARCHAR" property="serviceAccessory"/>
+       <result column="service_class" jdbcType="VARCHAR" property="serviceClass"/>
+    </resultMap>
+
+    <select id="findByContract" parameterType="java.lang.String" resultMap="GatheringPayment">
+        SELECT id,service_name,service_start_end,service_time,service_money,service_expire,service_period,service_accessory,service_class
+        FROM gatheringpayment WHERE service_name = #{contract_name}
+    </select>
+
+    <select id="searchName" parameterType="java.lang.String" resultMap="GatheringPayment">
+        	SELECT DISTINCT a.id,a.service_name,a.service_period FROM
+				(SELECT
+				MAX(id)id,
+				service_name,
+	      service_period
+			  FROM gatheringpayment GROUP BY service_name,service_period)a
+			JOIN gatheringpayment b ON a.service_name = b.service_name
+			WHERE a.service_name LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+    </select>
+
+    <insert id="insertgp" parameterType="com.example.cooperation.pojo.GatheringPayment">
+        insert into gatheringpayment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="serviceName != null and serviceName != ''">
+               service_name,
+           </if>
+            <if test="serviceStartEnd != null and serviceStartEnd != ''">
+                service_start_end,
+           </if>
+            <if test="serviceTime != null and serviceTime != ''">
+                service_time,
+            </if>
+            <if test="serviceMoney != null and serviceMoney != ''">
+                service_money,
+            </if>
+            <if test="serviceExpire != null and serviceExpire != ''">
+                service_expire,
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                service_period,
+            </if>
+            <if test="serviceAccessory != null and serviceAccessory != ''">
+                service_accessory,
+            </if>
+            <if test="serviceClass != null and serviceClass != ''">
+                service_class,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serviceName != null and serviceName != ''">
+                #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceStartEnd != null and serviceStartEnd != ''">
+                #{serviceStartEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceTime != null and serviceTime != ''">
+                #{serviceTime,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceMoney != null and serviceMoney != ''">
+                #{serviceMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="serviceExpire != null and serviceExpire != ''">
+                #{serviceExpire,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceAccessory != null and serviceAccessory != ''">
+                #{serviceAccessory,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceClass != null and serviceClass != ''">
+                #{serviceClass,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updategp" parameterType="com.example.cooperation.pojo.GatheringPayment">
+        update gatheringpayment
+        <set>
+            <if test="serviceName != null and serviceName != ''">
+                service_name = #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceStartEnd != null and serviceStartEnd != ''">
+                service_start_end = #{serviceStartEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceTime != null and serviceTime != ''">
+                service_time = #{serviceTime,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceMoney != null and serviceMoney != ''">
+                service_money = #{service_money,jdbcType=DOUBLE},
+            </if>
+            <if test="serviceExpire != null and serviceExpire != ''">
+                service_expire = #{serviceExpire,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null and servicePeriod != ''">
+                service_period = #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceAccessory != null and serviceAccessory != ''">
+                service_accessory = #{serviceAccessory,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceClass != null and serviceClass != ''">
+                service_class = #{serviceClass,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deletegp" parameterType="java.lang.Integer">
+        delete from gatheringpayment where id = #{id}
+    </delete>
+</mapper>    

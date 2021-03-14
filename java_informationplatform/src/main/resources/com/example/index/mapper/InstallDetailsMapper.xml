@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.InstallDetailsMapper">
+    <resultMap id="InstallDetails" type="com.example.index.pojo.InstallDetails">
+      <result column="contract_name" jdbcType="VARCHAR" property="contractname"/>
+      <result column="count" jdbcType="INTEGER" property="count"/>
+      <result column="elevator_class" jdbcType="VARCHAR" property="elevatorClass"/>
+    </resultMap>
+
+    <select id="selectList" parameterType="java.lang.String" resultType="com.example.index.pojo.InstallDetails">
+    SELECT DISTINCT a.contract_name,a.count,a.elevator_class FROM
+    (SELECT
+    contract_name,
+    COUNT(contract_name) count,
+    elevator_class
+    FROM details GROUP BY contract_name,elevator_class )a
+    JOIN details b ON a.elevator_class = b.elevator_class
+    WHERE a.elevator_class =#{str}
+</select>
+
+</mapper>    

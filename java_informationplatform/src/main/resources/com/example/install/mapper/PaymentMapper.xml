@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.install.mapper.PaymentMapper">
+    <resultMap id="Payment" type="com.example.install.pojo.Payment">
+      <id column="idf" jdbcType="INTEGER" property="idf"/>
+      <result column="f_contract_name" jdbcType="VARCHAR" property="fcontractname"/>
+      <result column="f_type" jdbcType="VARCHAR" property="ftype"/>
+      <result column="f_number" jdbcType="VARCHAR" property="fnumber"/>
+      <result column="f_price" jdbcType="DOUBLE" property="fprice"/>
+      <result column="f_payment" jdbcType="DOUBLE" property="fpayment"/>
+      <result column="fcount" jdbcType="INTEGER" property="fcount"/>
+      <result column="finstall_expend" jdbcType="DOUBLE" property="finstallexpend"/>
+      <result column="f_Accessory" jdbcType="VARCHAR" property="fAccessory"/>
+    </resultMap>
+
+
+    <select id="paymentfindByName" parameterType="java.lang.String" resultType="com.example.install.pojo.Payment">
+      SELECT DISTINCT a.fcount FROM
+        (SELECT
+        f_contract_name,
+        COUNT(f_contract_name) as fcount
+        FROM payment GROUP BY f_contract_name)a
+        JOIN payment b ON a.f_contract_name = b.f_contract_name
+        WHERE a.f_contract_name = #{fcontractname}
+    </select>
+
+    <select id="findBypName" parameterType="java.lang.String" resultMap="Payment">
+        SELECT b.idf,b.f_elevator_class,b.f_type,b.f_number,b.f_price,b.f_payment,a.cen,a.finstall_expend FROM
+        (SELECT
+        sum(f_price) as finstall_expend,
+        f_contract_name,
+        COUNT(f_contract_name) as cen
+        FROM payment GROUP BY f_contract_name)a
+        JOIN payment b ON a.f_contract_name = b.f_contract_name
+        WHERE a.f_contract_name = #{fcontractname}
+    </select>
+
+    <select id="paymentfind" parameterType="java.lang.String" resultMap="Payment">
+       SELECT b.idf,b.f_type,b.f_city,b.f_number,b.f_price,b.f_payment,b.f_brand,a.fcount,a.finstall_expend FROM
+        (SELECT
+        sum(f_price) as finstall_expend,
+        f_contract_name,
+        COUNT(f_contract_name) as fcount
+        FROM payment GROUP BY f_contract_name)a
+        JOIN payment b ON a.f_contract_name = b.f_contract_name
+        WHERE a.f_contract_name = #{fcontractname}
+    </select>
+
+    <insert id="insterPy" parameterType="com.example.install.pojo.Payment">
+        insert into payment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fcontractname != null and fcontractname != ''">
+                fcontractname,
+            </if>
+            <if test="ftype != null and ftype != ''">
+                ftype,
+            </if>
+            <if test="fnumber != null and fnumber != ''">
+                fnumber,
+            </if>
+            <if test="fprice != null and fprice != ''">
+                fprice,
+            </if>
+            <if test="fpayment != null and fpayment != ''">
+                fpayment,
+            </if>
+            <if test="felevatorclass != null and felevatorclass != ''">
+                felevatorclass,
+            </if>
+            <if test="fAccessory != null and fAccessory != ''">
+                fAccessory,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="f_contract_name != null and f_contract_name != ''">
+                #{fcontractname,jdbcType=VARCHAR},
+            </if>
+            <if test="f_type != null and f_type != ''">
+                #{ftype,jdbcType=VARCHAR},
+            </if>
+            <if test="f_number != null and f_number != ''">
+                #{fnumber,jdbcType=INTEGER},
+            </if>
+            <if test="f_price != null and f_price != ''">
+                #{fprice,jdbcType=DOUBLE},
+            </if>
+            <if test="f_payment != null and f_payment != ''">
+                #{fpayment,jdbcType=DOUBLE},
+            </if>
+            <if test="f_elevator_class != null and f_elevator_class != ''">
+                #{felevatorclass,jdbcType=VARCHAR},
+            </if>
+            <if test="f_Accessory != null and f_Accessory != ''">
+                #{fAccessory,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updatePa" parameterType="com.example.install.pojo.Payment">
+        update payment
+        <set>
+            <if test="f_contract_name != null and f_contract_name != ''">
+                f_contract_name = #{f_contract_name,jdbcType=VARCHAR},
+            </if>
+            <if test="f_type != null and f_type != ''">
+                f_type = #{f_type,jdbcType=VARCHAR},
+            </if>
+            <if test="f_number != null and f_number != ''">
+                f_number = #{f_number,jdbcType=INTEGER},
+            </if>
+            <if test="f_price != null and f_price != ''">
+                f_price = #{f_price,jdbcType=DOUBLE},
+            </if>
+            <if test="f_payment != null and f_payment != ''">
+                f_payment = #{f_payment,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where idf = #{idf,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deletePa" parameterType="java.lang.Integer">
+        DELETE FROM payment WHERE idf = #{idf}
+    </delete>
+</mapper>    

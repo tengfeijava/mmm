@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.install.mapper.DetailsMapper">
+    <resultMap id="Details" type="com.example.install.pojo.Details">
+        <id column="idh" jdbcType="INTEGER" property="idh"/>
+        <result column="contract_name" jdbcType="VARCHAR" property="contract_name"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="hratio" jdbcType="DOUBLE" property="hratio"/>
+        <result column="elevator_class" jdbcType="DOUBLE" property="elevatorclass"/>
+        <result column="returned_money" jdbcType="DOUBLE" property="returnedmoney"/>
+        <result column="install_expend" jdbcType="DOUBLE" property="install_expend"/>
+        <result column="deAccessory" jdbcType="VARCHAR" property="deAccessory"/>
+    </resultMap>
+
+    <select id="findByName" parameterType="java.lang.String" resultType="com.example.install.pojo.Details">
+    SELECT COUNT(contract_name) count FROM details WHERE contract_name = #{contract_name}
+    </select>
+
+
+    <select id="findBydetailsName" parameterType="java.lang.String" resultMap="Details">
+     SELECT b.idh,b.type,b.number,b.price,b.returned_money,b.elevator_class,a.count  FROM
+        (SELECT
+        contract_name,
+        COUNT(contract_name) as count
+        FROM details GROUP BY contract_name)a
+        JOIN details b ON a.contract_name = b.contract_name
+        WHERE a.contract_name = #{contract_name}
+   </select>
+
+    <select id="fingByName" parameterType="java.lang.String" resultMap="Details">
+         SELECT DISTINCT a.idh,a.contract_name FROM
+         (SELECT
+          MAX(idh)idh,
+          contract_name,
+          elevator_class
+           FROM details GROUP BY contract_name,elevator_class)a
+           JOIN details b ON a.contract_name = b.contract_name AND a.elevator_class = b.elevator_class
+           WHERE a.elevator_class = #{elevatorClass} AND a.contract_name LIKE "%"#{keywords}"%"
+    </select>
+
+    <insert id="insterDe" parameterType="com.example.install.pojo.Details">
+        insert into details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contract_name != null and contract_name != ''">
+                contract_name,
+            </if>
+            <if test="type != null and type != ''">
+                type,
+            </if>
+            <if test="number != null and number != ''">
+                number,
+            </if>
+            <if test="price != null and price != ''">
+                price,
+            </if>
+            <if test="returnedmoney != null and returnedmoney != ''">
+                returned_money,
+            </if>
+            <if test="elevatorclass != null and elevatorclass != ''">
+                elevator_class,
+            </if>
+            <if test="deAccessory != null and deAccessory != ''">
+                deAccessory,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contract_name != null and contract_name != ''">
+                #{contract_name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type != ''">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null and number != ''">
+                #{number,jdbcType=INTEGER},
+            </if>
+            <if test="price != null and price != ''">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="returnedmoney != null and returnedmoney != ''">
+                #{returnedmoney,jdbcType=DOUBLE},
+            </if>
+            <if test="elevatorclass != null and elevatorclass != ''">
+                #{elevatorclass,jdbcType=VARCHAR},
+            </if>
+            <if test="deAccessory != null and deAccessory != ''">
+                #{deAccessory,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateDe" parameterType="com.example.install.pojo.Details">
+        update details
+        <set>
+            <if test="contract_name != null and contract_name != ''">
+                contract_name = #{contract_name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null and number != ''">
+                number = #{number,jdbcType=INTEGER},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="returnedmoney != null and returnedmoney != ''">
+                returned_money = #{returnedmoney,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where idh = #{idh,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteDe" parameterType="java.lang.Integer">
+        DELETE FROM details WHERE idh = #{idh}
+    </delete>
+
+
+
+
+</mapper>    

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.user.mapper.ClerkMapper">
+<resultMap id="Clerk" type="com.example.user.pojo.Clerk">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="clerk_name" jdbcType="VARCHAR" property="clerk_name"/>
+    <result column="clerk_number" jdbcType="VARCHAR" property="clerk_number"/>
+    <result column="clerk_section" jdbcType="VARCHAR" property="clerk_section"/>
+    <result column="clerk_position" jdbcType="VARCHAR" property="clerk_position"/>
+    <result column="clerk_phone" jdbcType="VARCHAR" property="clerk_phone"/>
+    <result column="clerk_place" jdbcType="VARCHAR" property="clerk_place"/>
+    <result column="clerk_identity_card" jdbcType="VARCHAR" property="clerk_identity_card"/>
+    <result column="clerk_start_date" jdbcType="VARCHAR" property="clerk_start_date"/>
+    <result column="clerk_termination_date" jdbcType="VARCHAR" property="clerk_termination_date"/>
+    <result column="clerk_official_date" jdbcType="VARCHAR" property="clerk_official_date"/>
+    <result column="clerk_urgency_phone" jdbcType="VARCHAR" property="clerk_urgency_phone"/>
+    <result column="clerk_school" jdbcType="VARCHAR" property="clerk_school"/>
+    <result column="clerk_gradation" jdbcType="VARCHAR" property="clerk_gradation"/>
+    <result column="clerk_comment" jdbcType="VARCHAR" property="clerk_comment"/>
+</resultMap>
+
+
+<select id="clerkfindAll" resultMap="Clerk">
+        select
+        id,clerk_name,clerk_number,clerk_section,clerk_position,clerk_phone,clerk_place,
+        clerk_identity_card,clerk_start_date,clerk_termination_date,clerk_official_date,
+        clerk_urgency_phone,clerk_school,clerk_gradation,clerk_comment
+        from clerk
+    </select>
+
+    <insert id="insertClerk" parameterType="com.example.user.pojo.Clerk">
+      insert  into clerk
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="clerk_name != null and clerk_name != ''">
+              clerk_name,
+          </if>
+          <if test="clerk_number != null and clerk_number != ''">
+              clerk_number,
+          </if>
+          <if test="clerk_section != null and clerk_section != ''">
+              clerk_section,
+          </if>
+          <if test="clerk_position != null and clerk_position != ''">
+              clerk_position,
+          </if>
+          <if test="clerk_phone != null and clerk_phone != ''">
+              clerk_phone,
+          </if>
+          <if test="clerk_place != null and clerk_place != ''">
+              clerk_place,
+          </if>
+          <if test="clerk_identity_card != null and clerk_identity_card != ''">
+              clerk_identity_card,
+          </if>
+          <if test="clerk_start_date != null and clerk_start_date != ''">
+              clerk_start_date,
+          </if>
+          <if test="clerk_termination_date != null and clerk_termination_date != ''">
+              clerk_termination_date,
+          </if>
+          <if test="clerk_official_date != null and clerk_official_date != ''">
+              clerk_official_date,
+          </if>
+          <if test="clerk_urgency_phone != null and clerk_urgency_phone != ''">
+              clerk_urgency_phone,
+          </if>
+          <if test="clerk_school != null and clerk_school != ''">
+              clerk_school,
+          </if>
+          <if test="clerk_gradation != null and clerk_gradation != ''">
+              clerk_gradation,
+          </if>
+          <if test="clerk_comment != null and clerk_comment != ''">
+              clerk_comment,
+          </if>
+      </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides=",">
+           <if test="clerk_name != null and clerk_name != ''">
+               #{clerk_name,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_number != null and clerk_number != ''">
+               #{clerk_number,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_section != null and clerk_section != ''">
+               #{clerk_section,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_position != null and clerk_position != ''">
+               #{clerk_position,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_phone != null and clerk_phone != ''">
+               #{clerk_phone,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_place != null and clerk_place != ''">
+               #{clerk_place,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_identity_card != null and clerk_identity_card != ''">
+               #{clerk_identity_card,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_start_date != null and clerk_start_date != ''">
+               #{clerk_start_date,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_termination_date != null and clerk_termination_date != ''">
+               #{clerk_termination_date,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_official_date != null and clerk_official_date != ''">
+               #{clerk_start_date,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_urgency_phone != null and clerk_urgency_phone != ''">
+               #{clerk_urgency_phone,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_school != null and clerk_school != ''">
+               #{clerk_school,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_gradation != null and clerk_gradation != ''">
+               #{clerk_gradation,jdbcType=VARCHAR},
+           </if>
+           <if test="clerk_comment != null and clerk_comment != ''">
+               #{clerk_comment,jdbcType=VARCHAR},
+           </if>
+       </trim>
+    </insert>
+    <update id="updateClerk" parameterType="com.example.user.pojo.Clerk">
+       update clerk
+        <set>
+            <if test="clerk_name != null and clerk_name != ''">
+                clerk_name = #{clerk_name,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_number != null and clerk_number != ''">
+                clerk_number = #{clerk_number,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_section != null and clerk_section != ''">
+                clerk_section = #{clerk_section,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_position != null and clerk_position != ''">
+                clerk_position = #{clerk_position,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_phone != null and clerk_phone != ''">
+                clerk_phone = #{clerk_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_place != null and clerk_place != ''">
+                clerk_place = #{clerk_place,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_identity_card != null and clerk_identity_card != ''">
+                clerk_identity_card =  #{clerk_identity_card,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_start_date != null and clerk_start_date != ''">
+                clerk_start_date = #{clerk_start_date,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_termination_date != null and clerk_termination_date != ''">
+                clerk_termination_date = #{clerk_termination_date,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_official_date != null and clerk_official_date != ''">
+                clerk_termination_date = #{clerk_start_date,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_urgency_phone != null and clerk_urgency_phone != ''">
+                clerk_urgency_phone = #{clerk_urgency_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_school != null and clerk_school != ''">
+                clerk_school = #{clerk_school,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_gradation != null and clerk_gradation != ''">
+                clerk_gradation = #{clerk_gradation,jdbcType=VARCHAR},
+            </if>
+            <if test="clerk_comment != null and clerk_comment != ''">
+                clerk_comment = #{clerk_comment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteClert" parameterType="java.lang.Integer">
+        delete from clerk where id = #{id}
+    </delete>
+</mapper>

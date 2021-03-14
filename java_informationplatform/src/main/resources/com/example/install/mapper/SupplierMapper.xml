@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.install.mapper.SupplierMapper">
+    <resultMap id="Supplier" type="com.example.install.pojo.Supplier">
+     <id column="id" jdbcType="INTEGER" property="id"/>
+     <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
+     <result column="brand" jdbcType="VARCHAR" property="brand"/>
+     <result column="city" jdbcType="VARCHAR" property="city"/>
+     <result column="supplier_name" jdbcType="VARCHAR" property="supplierName"/>
+    </resultMap>
+
+
+    <select id="supplierGetName" parameterType="java.lang.String" resultType="com.example.install.pojo.Supplier">
+        select contract_name,brand,city,supplier_name from supplier where contract_name = #{contract_name}
+    </select>
+
+    <select id="getByNmae" parameterType="java.lang.String" resultType="com.example.install.pojo.Supplier">
+         select contract_name,brand,city,supplier_name from supplier where contract_name = #{contractName}
+    </select>
+
+    <insert id="insterSupplier" parameterType="com.example.install.pojo.Supplier">
+            insert into supplier
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="contractName != null and contractName != ''">
+                    contract_name,
+                </if>
+                <if test="brand != null and brand != ''">
+                    brand,
+                </if>
+                <if test="city != null and city != ''">
+                    city,
+                </if>
+                <if test="supplierName != null and supplierName != ''">
+                    supplier_name,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="contractName != null and contractName != ''">
+                    #{contractName,jdbcType=VARCHAR},
+                </if>
+                <if test="brand != null and brand != ''">
+                    #{brand,jdbcType=VARCHAR},
+                </if>
+                <if test="city != null and city != ''">
+                    #{city,jdbcType=INTEGER},
+                </if>
+                <if test="supplierName != null and supplierName != ''">
+                    #{supplierName,jdbcType=DOUBLE},
+                </if>
+            </trim>
+    </insert>
+
+
+    <update id="updateSupplier" parameterType="com.example.install.pojo.Supplier">
+        update supplier
+        <set>
+            <if test="brand != null and brand != ''">
+                brand = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierName != null and supplierName != ''">
+                supplier_name = #{supplierName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where  contract_name = #{contractName,jdbcType=VARCHAR}
+    </update>
+
+
+    <delete id="deleteSupplier" parameterType="java.lang.String">
+        delete from supplier where contract_name = #{contractName,jdbcType=VARCHAR}
+    </delete>
+   <delete id="delteSupplier" parameterType="java.lang.String">
+       delete from supplier where contract_name = #{contractName,jdbcType=VARCHAR}
+   </delete>
+</mapper>    

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.TodoindexMapper">
+    <resultMap id="Todoindex" type="com.example.index.pojo.Todoindex">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="project_name" jdbcType="VARCHAR" property="project_name"/>
+        <result column="project_class" jdbcType="VARCHAR" property="project_class"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="Todoindex">
+         select id,project_name,project_class from todoindex
+     </select>
+
+    <select id="brandList" resultType="String">
+           SELECT
+            brand
+            FROM details GROUP BY brand
+     </select>
+
+    <update id="updeteIndex" parameterType="com.example.index.pojo.Todoindex">
+        update todoindex
+         <set>
+             <if test="project_name != null and project_name != ''">
+                 project_name = #{project_name,jdbcType=VARCHAR},
+             </if>
+         </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deletelIndex" parameterType="java.lang.Integer">
+        delete from todoindex where id = #{id}
+    </delete>
+    <insert id="insertIndex" parameterType="com.example.index.pojo.Todoindex">
+        insert into todoindex
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="project_name != null and project_name != ''">
+                project_name,
+            </if>
+            <if test="project_class != null and project_class != ''">
+                project_class,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="project_name != null and project_name != ''">
+                #{project_name,jdbcType=VARCHAR},
+            </if>
+            <if test="project_class != null and project_class != ''">
+                #{project_class,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="arrdelete" >
+        delete from todoindex where id in
+        <foreach collection="list" item="arr" index="no" open="("  separator="," close=")">
+            #{arr}
+        </foreach>
+    </delete>
+</mapper>

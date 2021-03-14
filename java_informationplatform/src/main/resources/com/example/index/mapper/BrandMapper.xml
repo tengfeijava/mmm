@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.BrandMapper">
+    <resultMap id="Brands" type="com.example.index.pojo.Brands">
+        <id column="idh" property="value"/>
+        <result column="contract_name" property="name"/>
+    </resultMap>
+
+
+    <select id="selectBrand" parameterType="java.lang.String" resultMap="Brands">
+        SELECT DISTINCT a.idh,a.contract_name FROM
+        (
+        SELECT
+        MAX(idh) idh,
+        brand,
+        contract_name
+        FROM details GROUP BY contract_name,brand)a
+        JOIN details b ON a.brand = b.brand
+        WHERE b.brand = #{name}
+    </select>
+</mapper>    

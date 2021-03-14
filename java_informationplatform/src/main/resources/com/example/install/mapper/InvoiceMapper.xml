@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.install.mapper.InvoiceMapper">
+    <resultMap id="Invoice" type="com.example.install.pojo.Invoice">
+      <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="invoice_type" jdbcType="VARCHAR" property="invoice_type"/>
+        <result column="invoice_number" jdbcType="INTEGER" property="invoice_number"/>
+        <result column="invoice_date" jdbcType="VARCHAR" property="invoice_date"/>
+        <result column="invoice_money" jdbcType="DOUBLE" property="invoice_money"/>
+        <result column="rate" jdbcType="VARCHAR" property="rate"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="accessory" jdbcType="VARCHAR" property="accessory"/>
+        <result column="j_linkman" jdbcType="VARCHAR" property="j_linkman"/>
+        <result column="j_position" jdbcType="VARCHAR" property="j_position"/>
+        <result column="j_phone" jdbcType="VARCHAR" property="j_phone"/>
+        <result column="y_linkman" jdbcType="VARCHAR" property="y_linkman"/>
+        <result column="y_position" jdbcType="VARCHAR" property="y_position"/>
+        <result column="y_phone" jdbcType="VARCHAR" property="y_phone"/>
+        <result column="contract_name" jdbcType="VARCHAR" property="contract_name"/>
+    </resultMap>
+
+    <select id="findByiName" parameterType="java.lang.String" resultMap="Invoice">
+       SELECT
+        id,invoice_type,invoice_number,
+        invoice_date,invoice_money,rate,
+        remarks,accessory,j_linkman,j_position,j_phone,
+        y_linkman,y_position,y_phone,contract_name
+        FROM invoice WHERE contract_name = #{contract_name}
+    </select>
+
+    <delete id="deleteByid" parameterType="java.lang.Integer">
+        DELETE FROM invoice WHERE id = #{id}
+    </delete>
+    <update id="UpdateByInvoice" parameterType="com.example.install.pojo.Invoice">
+        update invoice
+        <set>
+            <if test="invoice_type != null and invoice_type != ''">
+                invoice_type = #{invoice_type,jdbcType=VARCHAR},
+            </if>
+            <if test="invoice_number != null and invoice_number != ''">
+                invoice_number = #{invoice_number,jdbcType=INTEGER},
+            </if>
+            <if test="invoice_date != null and invoice_date != ''">
+                invoice_date = #{invoice_date,jdbcType=VARCHAR},
+            </if>
+            <if test="invoice_money != null and invoice_money != ''">
+                invoice_money = #{invoice_money,jdbcType=DOUBLE},
+            </if>
+            <if test="rate != null and rate != ''">
+                rate = #{rate,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="accessory != null and accessory != ''">
+                accessory = #{accessory,jdbcType=VARCHAR},
+            </if>
+            <if test="j_linkman != null and j_linkman != ''">
+                j_linkman = #{j_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="j_position != null and j_position != ''">
+                j_position = #{j_position,jdbcType=VARCHAR},
+            </if>
+            <if test="j_phone != null and j_phone != ''">
+                j_phone = #{j_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="y_linkman != null and y_linkman != ''">
+                y_linkman = #{y_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="y_position != null and y_position != ''">
+                #{y_position,jdbcType=VARCHAR},
+            </if>
+            <if test="y_phone != null and y_phone != ''">
+                y_phone = #{y_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_name != null and contract_name != ''">
+                contract_name = #{contract_name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertByInvoice" parameterType="com.example.install.pojo.Invoice">
+        insert into invoice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="invoice_type != null and invoice_type != ''">
+                invoice_type,
+            </if>
+            <if test="invoice_number != null and invoice_number != ''">
+                invoice_number,
+            </if>
+            <if test="invoice_date != null and invoice_date != ''">
+                invoice_date,
+            </if>
+            <if test="invoice_money != null and invoice_money != ''">
+                invoice_money,
+            </if>
+            <if test="rate != null and rate != ''">
+                rate,
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks,
+            </if>
+            <if test="accessory != null and accessory != ''">
+                accessory,
+            </if>
+            <if test="j_linkman != null and j_linkman != ''">
+                j_linkman,
+            </if>
+            <if test="j_position != null and j_position != ''">
+                j_position,
+            </if>
+            <if test="j_phone != null and j_phone != ''">
+                j_phone,
+            </if>
+            <if test="y_linkman != null and y_linkman != ''">
+                y_linkman,
+            </if>
+            <if test="y_position != null and y_position != ''">
+                y_position,
+            </if>
+            <if test="y_phone != null and y_phone != ''">
+                y_phone,
+            </if>
+            <if test="contract_name != null and contract_name != ''">
+                contract_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="invoice_type != null and invoice_type != ''">
+                #{invoice_type,jdbcType=VARCHAR},
+            </if>
+            <if test="invoice_number != null and invoice_number != ''">
+                #{invoice_number,jdbcType=INTEGER},
+            </if>
+            <if test="invoice_date != null and invoice_date != ''">
+                #{invoice_date,jdbcType=VARCHAR},
+            </if>
+            <if test="invoice_money != null and invoice_money != ''">
+                #{invoice_money,jdbcType=DOUBLE},
+            </if>
+            <if test="rate != null and rate != ''">
+                #{rate,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="accessory != null and accessory != ''">
+                #{accessory,jdbcType=VARCHAR},
+            </if>
+            <if test="j_linkman != null and j_linkman != ''">
+                #{j_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="j_position != null and j_position != ''">
+                #{j_position,jdbcType=VARCHAR},
+            </if>
+            <if test="j_phone != null and j_phone != ''">
+                #{j_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="y_linkman != null and y_linkman != ''">
+                #{y_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="y_position != null and y_position != ''">
+                #{y_position,jdbcType=VARCHAR},
+            </if>
+            <if test="y_phone != null and y_phone != ''">
+                #{y_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_name != null and contract_name != ''">
+                #{contract_name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>    

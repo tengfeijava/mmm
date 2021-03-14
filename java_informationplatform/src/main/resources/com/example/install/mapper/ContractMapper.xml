@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.install.mapper.ContractMapper">
+    <resultMap id="Contract" type="com.example.install.pojo.Contract">
+       <id column="id" jdbcType="VARCHAR" property="id"/>
+       <result column="contract_name" jdbcType="VARCHAR" property="contract_name"/>
+
+       <result column="sign_date" jdbcType="VARCHAR" property="sign_date"/>
+       <result column="contract_class" jdbcType="VARCHAR" property="contract_class"/>
+    </resultMap>
+    
+    <select id="contractfind" parameterType="java.lang.String" resultMap="Contract">
+        SELECT id,contract_name,sign_date FROM contract WHERE contract_class = #{contract_class}
+    </select>
+
+
+    <select id="findByid" parameterType="java.lang.String" resultMap="Contract">
+        SELECT id,contract_name,sign_date,contract_class FROM contract WHERE id = #{id}
+    </select>
+
+    <select id="searchByName" parameterType="java.lang.String" resultMap="Contract">
+        SELECT id,contract_name,sign_date,contract_class FROM contract WHERE contract_name = #{name}
+    </select>
+
+    <delete id="deleteCheck" parameterType="java.lang.String">
+        delete from contract where <![CDATA[sign_date < #{dateCheck}]]>
+    </delete>
+</mapper>    

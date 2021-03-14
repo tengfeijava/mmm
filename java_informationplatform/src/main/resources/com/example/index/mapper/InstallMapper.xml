@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.index.mapper.InstallMapper">
+    <resultMap id="Install" type="com.example.index.pojo.Install">
+       <!--<result column="elevator_class" jdbcType="INTEGER" property="installsum"/>-->
+       <!--<result column="price" jdbcType="DOUBLE" property="installincome"/>-->
+       <!--<result column="f_elevator_class" jdbcType="DOUBLE" property="installexpend"/>-->
+    </resultMap>
+
+    <select id="installCollect" parameterType="java.lang.String" resultType="com.example.index.pojo.Install">
+	 SELECT DISTINCT a.installsum,a.installincome,a.installexpend FROM
+        (SELECT
+        elevator_class,
+        COUNT(elevator_class) AS installsum,
+        sum(returned_money) AS installincome,
+				sum(price) AS installexpend
+        FROM details GROUP BY elevator_class)a
+        JOIN details b ON a.elevator_class = b.elevator_class
+				WHERE a.elevator_class = #{elevator_class}
+    </select>
+
+   <select id="instaSum" parameterType="java.lang.String" resultType="com.example.index.pojo.Install">
+       	 SELECT DISTINCT a.installsum,a.installincome,c.installexpend FROM
+        (SELECT
+        elevator_class,
+        COUNT(elevator_class) AS installsum,
+        sum(returned_money) AS installincome
+        FROM details GROUP BY elevator_class)a
+        JOIN details b ON a.elevator_class = b.elevator_class
+        JOIN
+        (SELECT
+        f_elevator_class,
+        sum(f_price) AS installexpend
+        FROM payment GROUP BY f_elevator_class)c
+        ON a.elevator_class = c.f_elevator_class
+        WHERE a.elevator_class = #{elevator_class}
+   </select>
+
+</mapper>    
